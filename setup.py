@@ -29,7 +29,6 @@ setup(
     entry_points = """
 [console_scripts]
 pushReadme = update_github_readme:run
-flaskswagger = build_swagger_spec:run
     """,
     options={
         'bdist_rpm':{
