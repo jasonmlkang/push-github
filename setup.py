@@ -28,7 +28,7 @@ setup(
     ],
     entry_points = """
 [console_scripts]
-pushReadme = update_github_readme:run
+pushGithub = update_github_readme:run
     """,
     options={
         'bdist_rpm':{
