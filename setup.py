@@ -35,10 +35,12 @@ pushReadme = update_github_readme:run
             'build_requires':[
                 'python',
                 'python-setuptools',
+                'requests'
                 ],
             'requires':[
                 'python',
                 'python-setuptools',
+                'requests'
             ],
         },
     },
