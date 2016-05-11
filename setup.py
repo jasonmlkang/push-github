@@ -11,11 +11,11 @@ setup(
     version='0.0.1',
     url='https://github.com/jasonmlkang/update-github-readme',
     description='Update README.md file on a github repository',
-    author='Jason Kang',
+    author='Jason Min-Liang Kang',
     license='MIT',
     py_modules=['update_github_readme'],
     long_description=long_description,
-    install_requires=[],
+    install_requires=['requests==2.7.0'],
     classifiers=[
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
