@@ -8,11 +8,11 @@ import base64
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--username', default=None)
-parser.add_argument('--base-url', default=None)
+parser.add_argument('--repo-base-url', default=None)
 parser.add_argument('--repo-owner', default=None)
 parser.add_argument('--repo-name', default=None)
-parser.add_argument('--from-file', default=None)
-parser.add_argument('--to-file', default=None)
+parser.add_argument('--local-file', default=None)
+parser.add_argument('--remote-file-name', default=None)
 args = parser.parse_args()
 
 
@@ -41,12 +41,12 @@ def _parse_json(data):
     return _byteify(d)
 
 
-def _get_github(username, password, base_url, repo_owner, repo_name, to_file):
-    url = "https://{base_url}/api/v3/repos/{repo_owner}/{repo_name}/contents/{to_file}".format(
+def _get_github(username, password, base_url, repo_owner, repo_name, remote_file_name):
+    url = "https://{base_url}/api/v3/repos/{repo_owner}/{repo_name}/contents/{remote_file_name}".format(
         base_url=base_url,
         repo_owner=repo_owner,
         repo_name=repo_name,
-        to_file=to_file,
+        remote_file_name=remote_file_name,
     )
 
     try:
@@ -71,16 +71,16 @@ def _get_github(username, password, base_url, repo_owner, repo_name, to_file):
     return res_text
 
 
-def _put_github(username, password, base_url, repo_owner, repo_name, to_file, content, sha):
-    url = "https://{base_url}/api/v3/repos/{repo_owner}/{repo_name}/contents/{to_file}".format(
+def _put_github(username, password, base_url, repo_owner, repo_name, remote_file_name, content, sha):
+    url = "https://{base_url}/api/v3/repos/{repo_owner}/{repo_name}/contents/{remote_file_name}".format(
         base_url=base_url,
         repo_owner=repo_owner,
         repo_name=repo_name,
-        to_file=to_file
+        remote_file_name=remote_file_name
     )
 
     payload = {
-        "message": "Updating {}".format(to_file),
+        "message": "Updating {}".format(remote_file_name),
         "content": base64.b64encode(content),
         "sha": sha,
     }
@@ -113,15 +113,15 @@ def run():
         _print_missing("repo-owner")
     if not args.repo_name:
         _print_missing("repo-name")
-    if not args.from_file:
-        _print_missing("from-file")
-    if not args.to_file:
-        _print_missing("to-file")
+    if not args.local_file:
+        _print_missing("local-file")
+    if not args.remote_file_name:
+        _print_missing("remote-file-name")
 
     password = getpass.getpass("Password:")
 
     # Get sha of the file
-    res = _get_github(args.username, password, args.base_url, args.repo_owner, args.repo_name, args.to_file)
+    res = _get_github(args.username, password, args.base_url, args.repo_owner, args.repo_name, args.remote_file_name)
 
     if not "sha" in res:
         print "Cannot get sha"
@@ -129,10 +129,10 @@ def run():
     sha = res["sha"]
 
     # Update with new content
-    with open(args.from_file, 'r') as f:
+    with open(args.local_file, 'r') as f:
         content = f.read()
     if content:
-        _put_github(args.username, password, args.base_url, args.repo_owner, args.repo_name, args.to_file, content, sha)
+        _put_github(args.username, password, args.base_url, args.repo_owner, args.repo_name, args.remote_file_name, content, sha)
 
 
 if __name__ == '__main__':
