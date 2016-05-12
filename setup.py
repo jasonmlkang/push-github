@@ -28,7 +28,7 @@ setup(
     ],
     entry_points="""
     [console_scripts]
-    pushGithub = push_github:run
+    pushgithub = push_github:run
     """,
     options={
         'bdist_rpm':{
