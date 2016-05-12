@@ -27,8 +27,8 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     entry_points="""
-[console_scripts]
-pushGithub = update_github_readme:run
+    [console_scripts]
+    pushGithub = push_github:run
     """,
     options={
         'bdist_rpm':{
