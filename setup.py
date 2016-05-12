@@ -4,16 +4,16 @@ except ImportError:
     from distutils.core import setup
 
 with open('README.md') as file:
-    long_description = "Update README.md file on a github repository"
+    long_description = "Update a file on github"
 
 setup(
-    name='update-github-readme',
+    name='push-github',
     version='0.0.1',
-    url='https://github.com/jasonmlkang/update-github-readme',
-    description='Update README.md file on a github repository',
+    url='https://github.com/jasonmlkang/push-github',
+    description='Update a file on github',
     author='Jason Min-Liang Kang',
     license='MIT',
-    py_modules=['update_github_readme'],
+    py_modules=['push_github'],
     long_description=long_description,
     install_requires=['requests==2.7.0'],
     classifiers=[
@@ -26,7 +26,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    entry_points = """
+    entry_points="""
 [console_scripts]
 pushGithub = update_github_readme:run
     """,
